@@ -108,11 +108,11 @@ main:focus { outline: none; }
 .zaglavlje { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid transparent; transition: border-color .25s, box-shadow .25s; }
 .zaglavlje.je-skrolovano { border-bottom-color: var(--line); box-shadow: 0 10px 24px -18px rgba(27, 42, 48, .35); }
 .zaglavlje__red { display: flex; align-items: center; gap: 20px; min-height: var(--header-h); }
-.logo { display: inline-flex; align-items: center; gap: 12px; margin-right: auto; color: var(--ink); text-decoration: none; border-radius: 12px; }
+.logo { display: inline-flex; flex-shrink: 0; align-items: center; gap: 12px; margin-right: auto; color: var(--ink); text-decoration: none; border-radius: 12px; }
 .logo:hover { color: var(--ink); }
 .logo__slika { box-sizing: content-box; width: auto; height: 44px; padding: 6px 12px; border-radius: 10px; background: var(--slate); } /* the owner's wordmark needs its slate plate: the animals are white */
 .meni__lista { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; }
-.meni__lista a { display: block; padding: 10px 16px; border-radius: 999px; color: var(--ink); font-weight: 650; font-size: 1.0625rem; text-decoration: none; transition: background-color .2s; }
+.meni__lista a { display: block; white-space: nowrap; padding: 10px 16px; border-radius: 999px; color: var(--ink); font-weight: 650; font-size: 1.0625rem; text-decoration: none; transition: background-color .2s; }
 .meni__lista a:hover { background: var(--mist); color: var(--ink); }
 .meni__lista a[aria-current="page"] { background: var(--lime-wash); box-shadow: inset 0 -3px 0 var(--lime); border-radius: 12px 12px 4px 4px; }
 .meni__kontakt { display: none; }
@@ -380,6 +380,9 @@ main:focus { outline: none; }
 
 /* ---------------------------------------------------------------- responsive */
 @media (max-width: 1180px) {
+  .zaglavlje__tel { width: 44px; padding: 0; justify-content: center; }
+  .zaglavlje__tel span { display: none; }
+  .meni__lista a { padding-inline: 13px; }
   .vrste__mreza { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .vrsta { min-height: 136px; padding: 16px; }
   .vrsta__ime { font-size: 1.4rem; }
@@ -464,6 +467,53 @@ main:focus { outline: none; }
   .polje-red { grid-template-columns: minmax(0, 1fr); }
   .podnozje__mreza { grid-template-columns: minmax(0, 1fr); }
   .saradnja__kanali li { font-size: 1.1875rem; }
+}
+
+/* ---------------------------------------------------------------- news, video, social links */
+.vesti { padding-bottom: var(--section); }
+.vest { display: grid; grid-template-columns: minmax(0, .4fr) minmax(0, 1fr); gap: clamp(16px, 4vw, 40px); align-items: start; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.vest:first-child { border-top: 2px solid var(--ink); }
+.vest__slika { display: block; overflow: hidden; aspect-ratio: 16 / 9; border-radius: var(--r-m); background: var(--mist); }
+.vest__slika img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+.vest__slika:hover img { transform: scale(1.03); }
+.vest__tekst time, .clanak time { display: block; margin-bottom: 8px; color: var(--muted); font-size: .9375rem; font-variant-numeric: tabular-nums; }
+.vest__naslov { margin-bottom: 12px; font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem); font-weight: 780; line-height: 1.08; }
+.vest__naslov a { color: var(--ink); text-decoration: none; }
+.vest__naslov a:hover { color: var(--ink); text-decoration: underline; }
+.vest__tekst > p { max-width: 62ch; margin-bottom: 14px; color: var(--slate-700); }
+.clanak { padding-block: clamp(28px, 4vw, 56px) var(--section); }
+.clanak > * { max-width: 860px; }
+.clanak .naslov-1 { margin-bottom: 14px; }
+.clanak .proza { margin-top: 22px; }
+.clanak .foto, .clanak .video { margin-top: 32px; }
+.clanak__nazad { margin-top: 32px; }
+.video { margin: 0; }
+.video__okvir { position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 9; border-radius: var(--r-l); background: var(--ink); box-shadow: var(--shadow-2); }
+.video__okvir img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+.video__okvir:hover img { transform: scale(1.03); }
+.video__dugme { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 84px; height: 84px; border-radius: 999px; background: var(--lime); color: var(--ink);
+  box-shadow: 0 8px 24px -6px rgba(27, 42, 48, .45); transform: translate(-50%, -50%); transition: transform .3s var(--ease-out); }
+.video__okvir:hover .video__dugme, .video__okvir:focus-visible .video__dugme { transform: translate(-50%, -50%) scale(1.08); }
+.video__ik { width: 34px; height: 34px; margin-left: 4px; }
+.video__okvir iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video figcaption { margin-top: 12px; color: var(--muted); font-size: .9375rem; }
+.video figcaption strong { color: var(--ink); font-weight: 650; }
+.video-sekcija { padding-bottom: var(--section); }
+.video-sekcija .naslov-2 { margin-bottom: 24px; }
+.drustvene { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.drustvene a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 12px; border: 1.5px solid var(--line-strong); border-radius: 999px; color: var(--ink); font-weight: 650; text-decoration: none; transition: border-color .2s, background-color .2s; }
+.drustvene a .ik { width: 20px; height: 20px; }
+.drustvene a:hover { border-color: var(--slate-900); background: var(--mist); color: var(--ink); }
+.drustvene--uvod { margin-top: 24px; }
+.drustvene--podnozje { margin-top: 18px; }
+.podnozje .drustvene { display: flex; flex-wrap: wrap; gap: 10px; }
+.podnozje .drustvene--podnozje a { border-color: rgba(255, 255, 255, .22); color: #fff; text-decoration: none; }
+.podnozje .drustvene--podnozje a:hover { border-color: var(--lime); background: transparent; color: var(--lime); }
+.kontakt__podnaslov { margin: 32px 0 12px; font-family: var(--font); font-size: 1.0625rem; font-weight: 750; letter-spacing: 0; }
+@media (max-width: 640px) {
+  .vest { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .video__dugme { width: 64px; height: 64px; }
+  .video__ik { width: 28px; height: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

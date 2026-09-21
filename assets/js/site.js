@@ -169,4 +169,22 @@
       location.href = form.getAttribute('action') + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
     });
   }
+
+  /* Video: the poster is a plain link to YouTube; a click swaps in the privacy-enhanced player. Nothing loads from YouTube before that. */
+  [].slice.call(document.querySelectorAll('a[data-video]')).forEach(function (link) {
+    link.addEventListener('click', function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || ev.button !== 0) return;
+      ev.preventDefault();
+      var frame = document.createElement('iframe');
+      frame.src = 'https://www.youtube-nocookie.com/embed/' + link.getAttribute('data-video') + '?autoplay=1&rel=0';
+      frame.title = link.getAttribute('data-naslov') || 'Video';
+      frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      frame.setAttribute('allowfullscreen', '');
+      var box = document.createElement('div');
+      box.className = 'video__okvir';
+      box.appendChild(frame);
+      link.parentNode.replaceChild(box, link);
+      frame.focus();
+    });
+  });
 })();
